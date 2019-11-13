@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arbonkeep.dao.IUserDao" >
+    <!--配置查询所有-->
+    <select id="findAll" resultType="com.arbonkeep.domain.User"> -- 需要指定查询所有的方法名
+  -- 需要指明返回类型。这里查询的结果需要返回到com.arbonkeep.domain.User中
+        select * from user;
+    </select>
+</mapper>
