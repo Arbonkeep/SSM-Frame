@@ -25,6 +25,7 @@ public class MybatisTest {
         //3. 使用工厂去生成SqlSession对象
         SqlSession session = factory.openSession();
         //4. 使用SqlSession创建dao代理对象
+//        IUserDao mapper = session.getMapper(IUserDao.class);
         IUserDao mapper = session.getMapper(IUserDao.class);
         //5. 使用代理对象执行方法
         List<User> users = mapper.findAll();
@@ -35,5 +36,4 @@ public class MybatisTest {
         session.close();
         is.close();
     }
-
 }

@@ -1,6 +1,7 @@
 package com.arbonkeep.dao;
 
 import com.arbonkeep.domain.User;
+import com.arbonkeep.mybatis.annotations.Select;
 
 import java.util.List;
 

@@ -122,7 +122,107 @@
 <img src="./img/img08.png" width =800px>
 
     5. 自定义Mybatis(参考Mybatis_design)
+        <1> Mybatis自定义实现过程的分析
 
+<img src="./img/img09.png" width =800px>
+
+## Mybatis的CRUD操作
+    1. Mybatis的添加数据操作(保存)
+        <1> 实现请参考mybatisCRUD
+
+        <2> 在保存中，由于id是自增长的，所以id在用户看来是不清楚的。那么如何得到id呢
+            * 使用语句
+                select last_insert_id();    查看插入数据之后的id
+            
+            * Mybaytis中配置该语句
+
+<img src="./img/img11.png" width =800px>
+
+            * 使用该语句
+        
+<img src="./img/img12.png" width =800px>
+
+        <3> 注意：
+            1) 在Mybatis中的映射配置文件中，需要使用insert标签，详细如下：
+
+            2) 在执行操作后需要提交事务
+
+<img src="./img/img10.png" width =800px>
+
+    2. Mybatis的更新数据与删除数据
+        <1> 实现请参考mybatisCRUD
+        
+        <2> 注意：
+            1) 在Mybatis中的映射配置文件中，更新数据需要使用update标签，删除数据使用delete标签。
+
+    3. Mybatis的查询和模糊查询
+        <1> 实现请参考mybatisCRUD
+
+        <2> 注意：
+            1) 在Mybatis中的映射配置文件中，查询需要使用select标签
+
+            2) 这两个操作都需要指定参数的类型(parameterType)，与返回值类型(resultType)
+
+            3) 模糊查询时，我们在映射配置文件中没有指明模糊条件，需要在使用时指定
+
+            4) 模糊查询的另外一种写法：(这种方式在使用时就不需要加上%)
+                select * from user where username like '%${value}$%'; 
+
+    4. OGNL表达式：
+	    * Object Graphic Navigation Language：对象图导航语言，它是通过对象的取值方法来获取数据。在写法上把get给省
+                                              略了。
+	    
+            * 比如：我们获取用户的名称
+		            类中的写法：user.getUsername();
+		            OGNL表达式写法：user.username
+	
+                    * mybatis中为什么能直接写username,而不用user.呢？
+		              因为在parameterType中已经提供了属性所属的类，所以此时不需要写对象名
+
+    5. 将实体类包装起来查询用户信息
+        <1> 查看QueryVo(实体类，里面封装了User信息)，在配置时，我们需要使用user.username获取，详细如下：
+
+<img src="./img/img13.png" width =800px>
+
+    6. 报错问题的解析
+        <1> 当我们对实体类中的属性名称进行如下修改后（并修改了对应的set，get方法）
+            username -> userName
+            id -> userId
+            birthday ->userBirthday
+            sex -> userSex
+            address -> userAddress
+
+            发现会出现三个问题：
+
+                1) 首先在保存数据的配置插入数据后，获取插入数据的id中keyProperty(封装类中id名称)对应的属性值发生改
+                   变(由id -> userId)会报错。所以说需要修改成userId解决
+
+                2) 其次在插入和更新数据时，查找对应的OGNL表达式出错。如：username变成了userName，这就不能够匹配了
+                   所以在映射配置文件中，所有对应封装类的属性名都需要修改成与封装类(User)中的一致
+
+                3) 查询方面的问题：
+                    * 当我们查询所有时，发现除了username可以查询到，其余信息都不能查询到(也就是并没有封装进去)，那么
+                      这是为什么呢？
+                        * 这是因为在windows的mysql中是不区分大小写的，username只修改成userName，所以能封装进去，也
+                          就能查询出来，但是其他的就不能了，因为其余的都不匹配，然而，如果在linux的mysql中的话，那么
+                          所有的都不能封装进去，这是因为在linux的mySql中是区分大小写的
+
+                    * 解决方案：
+                        <1> 由于数据库中的字段与映射配置中sql语句中的字段不一致，那么我们可以通过对映射配置中的字段
+                            起别名(别名需要与数据库中的字段一致)来解决
+
+                        <2> 通过配置的方式解决。详细如下所示
+
+<img src="./img/img14.png" width =800px>
+
+
+
+                    
+
+
+
+
+    
 
     
 

@@ -1,5 +1,9 @@
 package com.arbonkeep.mybatis.sqlsession;
 
+import com.arbonkeep.mybatis.cfg.Configuration;
+import com.arbonkeep.mybatis.sqlsession.defaults.DefaultSqlSessionFactory;
+import com.arbonkeep.mybatis.utils.XMLConfigBuilder;
+
 import java.io.InputStream;
 
 /**
@@ -14,7 +18,8 @@ public class SqlSessionFactoryBuilder {
      * @return
      */
     public SqlSessionFactory build(InputStream config) {
-        return null;
+        Configuration cfg = XMLConfigBuilder.loadConfiguration(config);
+        return new DefaultSqlSessionFactory(cfg);
     }
 
 }
