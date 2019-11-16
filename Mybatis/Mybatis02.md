@@ -108,6 +108,43 @@
 
         <4> 在Mybatis中，实现dao的CUD都与上面类似，就不再详细的分析执行过程了
 
+    3. Mybatis中使用代理对象实现CRUD的过程分析
+        <1> 举例：实现查询所有的执行过程
+            1) 首先，执行一次完整的查询过程，需要6个步骤,这里我们关注的是代理对象的获取，因为，其余步骤与我们自己
+               实现的dao类一样
+
+            2) 获取代理对象需要通过session.getMapper方法获取，那么我们就进入getMapper中(session是DefaultSqlSess
+               ion)，所以进入DefaultSqlSession中
+
+<img src="./img/img33.png" width =800px>
+
+            3) 然后进入到Coonfiguation中，找到getMApper
+        
+<img src="./img/img34.png" width =800px>
+
+            4) 继续跟进mapperRegistry类，找到getMapper。发现返回了mapperProxyFactory.newInstance(sqlSession)
+               然后，进入该类找到newInstance方法
+
+<img src="./img/img35.png" width =800px>
+
+            5) 进入MapperProxyFactory，找到newInstance
+
+<img src="./img/img36.png" width =800px>
+
+<img src="./img/img37.png" width =800px>
+
+            6) 向下找到参数mapperProxy，进入到MapperProxy中，也就是动态代理
+
+<img src="./img/img38.png" width =800px>
+
+            7) 向下寻找execute方法中的内容
+
+<img src="./img/img39.png" width =800px>
+
+            8) 进入到executeForMany中发现selectList，那么就进入到之前我们自己写实现类的步骤，自此就分析完毕
+
+<img src="./img/img40.png" width =800px>
+
 
 
 

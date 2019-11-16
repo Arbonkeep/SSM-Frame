@@ -71,7 +71,7 @@
     </select>
 
     <!--根据QueryVo中的条件查询用户-->
-    <select id="findUserByVo" parameterType="com.arbonkeep.dao.QueryVo" resultMap="userMap">
+    <select id="findUserByVo" parameterType="com.arbonkeep.domain.QueryVo" resultMap="userMap">
         select * from user where username like #{user.username};
     </select>
 
