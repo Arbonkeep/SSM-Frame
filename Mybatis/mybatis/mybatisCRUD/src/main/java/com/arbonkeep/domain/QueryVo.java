@@ -1,6 +1,4 @@
-package com.arbonkeep.dao;
-
-import com.arbonkeep.domain.User;
+package com.arbonkeep.domain;
 
 /**
  * @author arbonkeep

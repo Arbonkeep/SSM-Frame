@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arbonkeep.dao.IUserDao">
+
+
+    <!--1.配置查询所有-->
+    <select id="findAll" resultType="com.arbonkeep.domain.User">
+    <!--查询所有-->
+        <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
+        select * from user;
+    </select>
+
+    <!--2.配置保存数据，插入新数据-->
+    <insert id="save" parameterType="com.arbonkeep.domain.User">
+        <!--配置插入数据后，获取插入数据的id-->
+        <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+      <!--插入数据-->
+        INSERT INTO USER (username,birthday,sex,address) VALUES (#{username},#{birthday},#{sex},#{address});
+
+    </insert>
+    
+    <!--3.配置更新用户，修改用户数据-->
+    <update id="update" parameterType="com.arbonkeep.domain.User">
+        <!--更新语句-->
+        update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} where id=#{id};
+
+    </update>
+
+    <!--4.配置删除用户-->
+    <delete id="delete" parameterType="java.lang.Integer" > <!--通过id删除所以是int类型个，可以写成Integer或java.lang.Integer-->
+        <!--删除语句-->
+        delete from user where id=#{id}
+
+    </delete>
+
+    <!--5.查询一个通过id查询-->
+    <select id="selectById" parameterType="Integer" resultType="com.arbonkeep.domain.User">
+--         查询语句
+        select * from user where id = #{id};
+    </select>
+
+    <!--6.通过名字进行模糊查询-->
+    <select id="selectByName" parameterType="String" resultType="com.arbonkeep.domain.User">
+        -- 查询语句
+        select * from user where username like #{name} <!--由于在这里没有指定模糊条件(%)s所以在测试类中需要指明-->
+        <!--select * from user where username like '%${value}$%';-->
+
+    </select>
+
+    <!--7.获取用户的总记录条数-->
+    <select id="findTotal" resultType="int">
+        select count(id) from user;
+    </select>
+
+
+</mapper>

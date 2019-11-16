@@ -1,7 +1,7 @@
 package com.arbonkeep.test;
 
 import com.arbonkeep.dao.IUserDao;
-import com.arbonkeep.domain.QueryVo;
+import com.arbonkeep.dao.impl.UserDaoImpl;
 import com.arbonkeep.domain.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -31,18 +31,15 @@ public class MybatisTest {
          is = Resources.getResourceAsStream("SqlMapConfig.xml");
         //2.获取sqlSessionFactory
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
-        //3.获取session
-         session = factory.openSession();
-        //4.获取代理对象
-         dao = session.getMapper(IUserDao.class);
+        //3.使用工厂对象创建dao对象
+        dao = new UserDaoImpl(factory);
+
+
     }
 
     @After//用于在测试方法执行之后执行
     public void destroy() throws IOException {
-        //需要提交事务
-        session.commit();
-        //6.关闭资源
-        session.close();
+        //5.关闭资源
         is.close();
     }
 
@@ -51,10 +48,9 @@ public class MybatisTest {
      * @throws IOException
      */
     @Test
-    public void test1() throws IOException {
+    public void testFindAll() throws IOException {
 
-
-        //5.使用代理对象执行方法
+        //4.使用dao对象执行方法
         List<User> users = dao.findAll();
         for (User user : users) {
             System.out.println(user);
@@ -69,10 +65,10 @@ public class MybatisTest {
     public void testSave() {
         //创建User对象
         User user = new User();
-        user.setUserName("zhangsan ");
-        user.setUserAddress("南昌市东湖区");
-        user.setUserSex("男");
-        user.setUserBirthday(new Date());
+        user.setUsername("zhangsan ");
+        user.setAddress("南昌市东湖区");
+        user.setSex("男");
+        user.setBirthday(new Date());
 
         System.out.println("在保存之前。。。" + user);
         //5.使用代理对象调用save方法
@@ -80,8 +76,6 @@ public class MybatisTest {
 
         System.out.println("在保存之后。。。" + user);
 
-        //需要提交事务（由于每次操作都需要提交事务所以我们将这个操作放在destroy中）
-        //session.commit();
 
 
     }
@@ -92,11 +86,11 @@ public class MybatisTest {
     @Test
     public void testUpdate() {
         User user = new User();
-        user.setUserId(49);
-        user.setUserName("zhangsan");
-        user.setUserAddress("南昌市东湖区");
-        user.setUserSex("女");
-        user.setUserBirthday(new Date());
+        user.setId(49);
+        user.setUsername("zhangsan");
+        user.setAddress("南昌市西湖区");
+        user.setSex("男");
+        user.setBirthday(new Date());
 
         dao.update(user);
 
@@ -108,7 +102,7 @@ public class MybatisTest {
     @Test
     public void testDelete() {
         //使用代理对象调用删除操作
-        dao.delete(50);
+        dao.delete(51);
     }
 
     /**
@@ -117,7 +111,7 @@ public class MybatisTest {
     @Test
     public void testselectById() {
         //使用代理对象查询
-        User user = dao.selectById(49);
+        User user = dao.selectById(52);
         System.out.println(user);
     }
 
@@ -126,7 +120,7 @@ public class MybatisTest {
      */
     @Test
     public void testselectByName() {
-        //使用代理对象进行模糊查询
+        //使用dao对象进行模糊查询
         List<User> users = dao.selectByName("%王%");//这种方式使用的是ParameterStatement的参数占位符
         //List<User> users = dao.selectByName("王");//这种方式使用的是Statement对象的字符串拼接Sql
 
@@ -147,18 +141,6 @@ public class MybatisTest {
         System.out.println(total);
     }
 
-    @Test
-    public void testQueryVo() {
-        QueryVo queryVo = new QueryVo();
-        User user = new User();
-        user.setUserName("%王%");
-        //执行查询方法
-        List<User> users = dao.findUserByVo(queryVo);
-
-        for (User user1 : users) {
-            System.out.println(user1);
-        }
-    }
 
 
 

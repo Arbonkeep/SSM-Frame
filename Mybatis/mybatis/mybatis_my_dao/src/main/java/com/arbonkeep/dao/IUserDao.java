@@ -1,6 +1,5 @@
 package com.arbonkeep.dao;
 
-import com.arbonkeep.domain.QueryVo;
 import com.arbonkeep.domain.User;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface IUserDao {
      */
     public void update(User user);
 
-    /**`
+    /**
      * 删除用户
      * @param id
      */
@@ -51,10 +50,4 @@ public interface IUserDao {
      */
     public int findTotal();
 
-    /**
-     * 根据queryVo中的条件查询用户
-     * @param vo
-     * @return
-     */
-    public List<User> findUserByVo(QueryVo vo);
 }
