@@ -27,6 +27,8 @@ INSERT  INTO `user`(`id`,`username`,`birthday`,`sex`,`address`) VALUES
  (48,'小马宝莉','2018-03-08 11:44:00','女','北京修正');
 
 
+SELECT * FROM USER;
+
 
 
 
@@ -44,6 +46,9 @@ CREATE TABLE `account` (
 
 
 INSERT  INTO `account`(`ID`,`UID`,`MONEY`) VALUES (1,41,1000),(2,45,1000),(3,41,2000);
+
+
+DESC account;
 
 
 

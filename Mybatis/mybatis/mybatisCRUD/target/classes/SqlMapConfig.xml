@@ -4,6 +4,38 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+    <!--
+        可以在标签内部配置数据库信息。也可以通过属性引用外部配置文件信息
+            resource属性：用于指定配置文件的位置，是按照类路径的写法来写，并且必须存放在类路径之下
+
+            url属性：是要求按照Url的写法来写地址
+            URL：Uniform Resource Locator 统一资源定位符。它是可以唯一标识一个资源的位置。
+            它的写法：
+                http://localhost:8080/mybatisserver/demo1Servlet
+                协议      主机     端口       URI
+            URI:Uniform Resource Identifier 统一资源标识符。它是在应用中可以唯一定位一个资源的。
+    -->
+
+    <!--<properties resource="jdbcConfig.properties">-->
+        <properties url="file:///C:\Users\asus\Desktop\Computer_Learning_Notes\SSM-Frame\Mybatis\mybatis\mybatisCRUD\src\main\resources\jdbcConfig.properties">
+        <!--
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        -->
+    </properties>
+
+    <!--使用typeAliases配置别名，它只能配置domain中的类的别名-->
+    <typeAliases>
+        <!--typeAlias用于配置别名。type属性指定的是实体类的全限定类名。alias指定的是别名，当指定了别名就不再区分大小写-->
+        <!--<typeAlias type="com.arbonkeep.domain.User" alias="user"></typeAlias>-->
+
+        <!--package用于指定要配置别名的包，当指定之后，该包下的实体类都会注册别名，并且类名就是别名，不在区分大小写-->
+        <package name="com.arbonkeep.domain"></package>
+
+    </typeAliases>
+
     <!--配置环境-->
     <environments default="mysql">
         <!--配置mysql环境-->
@@ -13,10 +45,11 @@
             <!--配置连接池-->
             <dataSource type="POOLED">
                 <!--配置数据库的四个基本信息-->
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <!--注意：在引用property时需要注意key(这里需要加上jdbc.)-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
 
             </dataSource>
         </environment>
@@ -24,8 +57,9 @@
 
     <!--指定映射配置文件-->
 <mappers>
-    <mapper resource="com/arbonkeep/dao/IUserDao.xml"/>
-
+    <!--<mapper resource="com/arbonkeep/dao/IUserDao.xml"/>-->
+    <!--mappers标签中的package标签是用于指定dao接口所在包，当指定了之后就不再需要写mapper以及resource或者class属性了-->
+    <package name="com.arbonkeep.dao"></package>
 </mappers>
 
 </configuration>

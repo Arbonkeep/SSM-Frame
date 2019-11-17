@@ -27,7 +27,7 @@
     </select>
 
     <!--2.配置保存数据，插入新数据-->
-    <insert id="save" parameterType="com.arbonkeep.domain.User">
+    <insert id="save" parameterType="User">
         <!--配置插入数据后，获取插入数据的id-->
         <selectKey keyProperty="userId" keyColumn="id" resultType="int" order="AFTER">
             select last_insert_id();
@@ -38,7 +38,7 @@
     </insert>
     
     <!--3.配置更新用户，修改用户数据-->
-    <update id="update" parameterType="com.arbonkeep.domain.User">
+    <update id="update" parameterType="User"><!--由于配置了别名，所以可以使用，不区分大小写-->
         <!--更新语句-->
         update user set username=#{userName},birthday=#{userBirthday},sex=#{userSex},address=#{userAddress} where id=#{userId};
 

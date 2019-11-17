@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arbonkeep.dao.IUserDao">
+
+    <!--1.配置查询所有-->
+    <select id="findAll" resultType="user">
+        select * from user;
+    </select>
+
+    <!--2.查询一个通过id查询-->
+    <select id="selectById" parameterType="Integer" resultType="user">
+--         查询语句
+        select * from user where id = #{id};
+    </select>
+
+
+</mapper>

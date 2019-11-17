@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arbonkeep.dao.IUserDao">
+
+    <!--配置查询结果列名与实体类属性名对应关系-->
+    <resultMap id="userMap" type="com.arbonkeep.domain.User">
+        <!--主键字段的对应-->
+        <id property="userId" column="id"></id>
+        <!--非主键字段的对应-->
+        <result property="userName" column="username"></result>
+        <result property="userBirthday" column="birthday"></result>
+        <result property="userSex" column="sex"></result>
+        <result property="userAddress" column="address"></result>
+
+
+    </resultMap>
+
+
+    <!--1.配置查询所有-->
+    <select id="findAll" resultMap="userMap">
+    <!--查询所有-->
+        select * from user;
+    </select>
+
+    <!--2.查询一个通过id查询-->
+    <select id="selectById" parameterType="Integer" resultMap="userMap">
+--         查询语句
+        select * from user where id = #{id};
+    </select>
+
+    <!--3.通过名字进行模糊查询-->
+    <select id="selectByName" parameterType="String" resultMap="userMap">
+        -- 查询语句
+        select * from user where username like #{name} <!--由于在这里没有指定模糊条件(%)s所以在测试类中需要指明-->
+        <!--select * from user where username like '%${value}$%';-->
+
+    </select>
+
+    <!--4.根据QueryVo中的条件查询用户-->
+    <select id="findUserByVo" parameterType="com.arbonkeep.domain.QueryVo" resultMap="userMap">
+        select * from user where username like #{user.userName};
+    </select>
+
+    <!--根据条件查询-->
+    <select id="findByCondition" resultMap="userMap" parameterType="user">
+        SELECT * from user
+        <where>
+            <if test="userName != null">
+                <!--注意：这里等于不能使用&&-->
+                and username = #{userName}
+            </if>
+            <!--如果后面还有条件那么可以继续使用if在后面追加-->
+            <if test="userSex != null">
+                and sex = #{userSex}
+            </if>
+        </where>
+
+    </select>
+    
+    <!--根据QueryVo中的Id集合实现查询用户列表-->
+    <select id="findUserInIds" resultMap="userMap" parameterType="USER">
+        select * from user
+        <where>
+            <if test="ids != null and ids.size()>0">
+                <foreach collection="ids" open="and id in(" close=")" item="uid" separator=",">
+                    #{uid}
+                    <!--注意{}中的内容需要与item中一致-->
+                </foreach>
+            </if>
+
+        </where>
+
+    </select>
+    
+
+</mapper>
