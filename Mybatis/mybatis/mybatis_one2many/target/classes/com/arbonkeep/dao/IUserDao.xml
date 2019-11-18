@@ -5,9 +5,28 @@
 
 <mapper namespace="com.arbonkeep.dao.IUserDao">
 
+    <!--定义User的resultMap-->
+    <resultMap id="userAccountMap" type="user">
+        <!--配置主键部分-->
+        <id property="id" column="id"></id>
+        <!--配置非主键部分-->
+        <result property="username" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+
+        <!--配置users对象中集合accounts的映射-->
+        <collection property="accounts" ofType="account">
+            <!--ofType是指集合的类型，这里我们在mybatis的主配置文件中配置了别名，所以直接使用account-->
+            <id property="id" column="id"></id>
+            <result property="uid" column="uid"></result>
+            <result property="money" column="money"></result>
+        </collection>
+    </resultMap>
+
     <!--1.配置查询所有-->
-    <select id="findAll" resultType="user">
-        select * from user;
+    <select id="findAll" resultMap="userAccountMap">
+        select * from user u left OUTER join account a on u.id = a.uid
     </select>
 
     <!--2.查询一个通过id查询-->

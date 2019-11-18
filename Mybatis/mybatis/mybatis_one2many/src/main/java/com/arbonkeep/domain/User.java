@@ -2,6 +2,7 @@ package com.arbonkeep.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author arbonkeep
@@ -13,6 +14,17 @@ public class User implements Serializable{
     private Date birthday;
     private String sex;
     private String address;
+
+    //主表实体中应该包含一个从表的实体对象(一对多，所以返回的是集合，在配置xml是需要使用collection标签)
+    private List<Account> accounts;
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
 
     public Integer getId() {
         return id;

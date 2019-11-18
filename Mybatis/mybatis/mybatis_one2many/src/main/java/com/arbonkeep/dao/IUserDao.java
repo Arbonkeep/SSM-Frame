@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IUserDao {
     /**
-     * 查询所有的方法
+     * 查询所有的方法，同时获取到用户下所有的账户信息
      *
      * @return
      */

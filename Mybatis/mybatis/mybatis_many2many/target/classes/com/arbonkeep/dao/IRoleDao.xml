@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arbonkeep.dao.IRoleDao">
+    <resultMap id="roleMap" type="Role">
+        <id property="roleId" column="rid"></id>
+        <result property="roleName" column="role_name"></result>
+        <result property="roleDesc" column="role_desc"></result>
+        <!--注意：在windows的mysql中不区分大小写，也就是column属性可以小写-->
+
+        <!--配置映射-->
+        <collection property="users" ofType="user">
+            <id property="id" column="id"></id>
+            <result property="username" column="username"></result>
+            <result property="sex" column="sex"></result>
+            <result property="birthday" column="birhtday"></result>
+            <result property="address" column="address"></result>
+        </collection>
+
+    </resultMap>
+
+    <!--查询所有-->
+    <select id="findAll" resultMap="roleMap">
+        select u.*,r.id as rid,r.role_name,r.role_desc from role r
+        left outer join user_role ur on r.id = ur.rid
+        left outer join user u on u.id = ur.uid
+    </select>
+</mapper>

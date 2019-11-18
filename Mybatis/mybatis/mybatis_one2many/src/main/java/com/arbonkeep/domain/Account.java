@@ -11,7 +11,7 @@ public class Account implements Serializable {
     private int uid;
     private double money;
 
-    //从表实体中应该包含一个主表实体的对象引用
+    //从表实体中应该包含一个主表实体的对象引用(这里是一对一的关系，所以在配置xml文件时，需要使用association关键字)
     private User user;
 
     public User getUser() {

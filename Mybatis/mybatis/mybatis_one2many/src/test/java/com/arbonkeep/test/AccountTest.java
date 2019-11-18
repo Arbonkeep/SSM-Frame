@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * @author arbonkeep
  * @date 2019/11/17 - 16:25
+ * 测试一对一的关系
  */
 public class AccountTest {
     private InputStream is;
@@ -55,7 +56,7 @@ public class AccountTest {
         List<Account> accounts = dao.findAll();
         //2.遍历
         for (Account account : accounts) {
-            System.out.println("-------------一个用户的信息------------");
+            System.out.println("-------------一个Account的详细信息------------");
             System.out.println(account);
             System.out.println(account.getUser());//获取user信息
         }
