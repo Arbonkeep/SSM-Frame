@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <properties resource="jdbcConfig.properties"></properties>
+
+    <!--配置二级缓存的使用-->
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!--使用typeAliases配置别名，它只能配置domain中的类的别名-->
+    <typeAliases>
+        <package name="com.arbonkeep.domain"></package>
+    </typeAliases>
+
+    <!--配置环境-->
+    <environments default="mysql">
+        <!--配置mysql环境-->
+        <environment id="mysql">
+            <!--配置务类型 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--配置连接池-->
+            <dataSource type="POOLED">
+                <!--配置数据库的四个基本信息-->
+                <!--注意：在引用property时需要注意key(这里需要加上jdbc.)-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+
+            </dataSource>
+        </environment>
+    </environments>
+    <!--指定映射配置文件-->
+<mappers>
+    <package name="com.arbonkeep.dao"></package>
+</mappers>
+
+</configuration>

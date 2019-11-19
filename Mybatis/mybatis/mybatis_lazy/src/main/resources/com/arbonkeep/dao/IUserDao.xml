@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arbonkeep.dao.IUserDao">
+
+    <!--定义User的resultMap-->
+    <resultMap id="userAccountMap" type="user">
+        <!--配置主键部分-->
+        <id property="id" column="id"></id>
+        <!--配置非主键部分-->
+        <result property="username" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+
+        <!--配置users对象中集合accounts的映射
+            这里是使用用户的id查所以column是id
+        -->
+        <collection property="accounts" ofType="account" select="com.arbonkeep.dao.AccountDao.findAccountByUid" column="id"></collection>
+    </resultMap>
+
+    <!--1.配置查询所有-->
+    <select id="findAll" resultMap="userAccountMap">
+        select * from user u
+    </select>
+
+    <!--2.查询一个通过id查询-->
+    <select id="selectById" parameterType="Integer" resultType="user">
+--         查询语句
+        select * from user where id = #{id};
+    </select>
+
+
+</mapper>
