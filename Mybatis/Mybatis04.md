@@ -132,6 +132,30 @@
 
     2. 注意：在使用注解开发时，不能够配置xml文件，即使没有使用也不可以。就是说两者不能够同时存在
 
+    3. Results注解的作用
+        <1> Results注解可以用来解决多表连接时，数据库字段与我们封装类中字段对不上的问题(起别名也可以有这个作用)
 
+        <2> 使用如下所示
 
+<img src="./img/img67.png" width =800px>
+
+    4. 注解开发一对一的查询配置
+
+<img src="./img/img68.png" width =800px>
+
+    5. 注解开发一对多的查询配置
+
+<img src="./img/img69.png" width =800px>
+
+    6. 缓存的配置
+        <1> 同样配置需要对照之前的三步
+            1) 首先在mybatis中的主配置文件中配置
+
+<img src="./img/img70.png" width =800px>
+
+            2) 然后再使用注解配置
+
+<img src="./img/img71.png" width =800px>
+
+ 
 
