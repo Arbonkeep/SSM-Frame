@@ -1,0 +1,33 @@
+package com.arbonkeep.service.impl;
+
+import com.arbonkeep.dao.AccountDao;
+import com.arbonkeep.dao.impl.AccountDaoImpl;
+import com.arbonkeep.factory.BeanFactory;
+import com.arbonkeep.service.AccountService;
+
+/**
+ * @author arbonkeep
+ * @date 2019/11/21 - 14:03
+ * 账户的业务层实现类
+ */
+public class AccountServiceImpl implements AccountService{
+    //private AccountDao accountDao =  new AccountDaoImpl();//这里使用了new关键字增加了耦合
+
+    //使用工厂模式获取对象降低耦合
+    private  AccountDao accountDao = (AccountDao) BeanFactory.getBean("AccountDao");
+
+    //用于测试单例与多例
+    //private int i = 1;
+
+    /**
+     * 执行保存的业务逻辑
+     */
+    @Override
+    public void saveAccount() {
+        int i = 1;
+        accountDao.saveAccount();
+
+        System.out.println(i);
+        i++;
+    }
+}

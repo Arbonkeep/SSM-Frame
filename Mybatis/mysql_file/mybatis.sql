@@ -49,7 +49,10 @@ INSERT  INTO `account`(`ID`,`UID`,`MONEY`) VALUES (1,41,1000),(2,45,1000),(3,41,
 
 
 DESC account;
+select * from account;
 
+
+select * from role;
 
 
 DROP TABLE IF EXISTS `role`;
