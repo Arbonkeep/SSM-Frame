@@ -3,7 +3,7 @@
 CREATE DATABASE mybatis;
 
 
--- 创建表
+-- exit表
 
 DROP TABLE IF EXISTS `user`;
 

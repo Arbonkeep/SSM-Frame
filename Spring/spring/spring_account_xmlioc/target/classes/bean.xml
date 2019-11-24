@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置accountService-->
+    <bean id="accountService" class="com.arbonkeep.service.impl.AccountServiceImpl">
+        <!--注入dao，通过引用指定-->
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+
+    <!--配置accountDao-->
+    <bean id="accountDao" class="com.arbonkeep.dao.impl.AccountDaoImpl">
+        <!--注入runner-->
+        <property name="runner" ref="runner"></property>
+    </bean>
+
+    <!--配置QueryRunner-->
+    <!--需要配制范围为多例，以避免使用时出现线程问题-->
+    <bean id="runner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!--使用构造方法注入数据-->
+        <constructor-arg name="ds" ref="dataSource"></constructor-arg>
+
+    </bean>
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--配置数据库的信息-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/spring"></property>
+        <property name="user" value="root"></property>
+        <property name="password" value="root"></property>
+    </bean>
+</beans>

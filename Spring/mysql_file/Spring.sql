@@ -1,3 +1,6 @@
+-- 创建spring数据库
+CREATE DATABASE spring;
+
 CREATE TABLE account(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	NAME VARCHAR(40),
@@ -7,3 +10,5 @@ CREATE TABLE account(
 INSERT INTO account(NAME,money) VALUES('aaa',1000);
 INSERT INTO account(NAME,money) VALUES('bbb',1000);
 INSERT INTO account(NAME,money) VALUES('ccc',1000);
+
+SELECT * FROM account;
