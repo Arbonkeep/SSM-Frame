@@ -44,7 +44,8 @@
 
             2) 基于Autowired注解需要修改id，那么就衍生出了一个与它配合使用的注解Qualifier
                 * 作用：
-                    在按照类中注解之上再按照名称注入。它在给类成员注入时，不能单独使用。但是在给方法参数注入时是可以的
+                    在按照类中注解之上再按照名称注入。它在给类成员注入时，不能单独使用。但是在给方法参数注入时是可
+                    以的
 
                 * 属性：    
                     value：用于指定bean的id
@@ -56,8 +57,8 @@
                 * 属性：
                     name：用于指定bean的id
             
-                * 以上三个注解都只能注入其它bean类型的数据，而基本数据类型和String不能使用上述注解实现。另外集合类型
-                  的注入只能通过xml实现
+                * 以上三个注解都只能注入其它bean类型的数据，而基本数据类型和String不能使用上述注解实现。另外集合类
+                  型的注入只能通过xml实现
 
             4) value注解
                 * 作用：用于注入基本数据类型和String类型数据
@@ -89,7 +90,8 @@
 
 
     2. 注解的的使用需要导入spring的context依赖
-        * 告知spring在创建容器时需要扫描的包，配置所需要的标签不在bean的约束中，而是一个名为context的名称空间和约束中
+        * 告知spring在创建容器时需要扫描的包，配置所需要的标签不在bean的约束中，而是一个名为context的名称空间和约
+          束中
 
         * 需要使用:component-scan属性指定注解查找所在的包。如下所示
 
@@ -137,17 +139,61 @@
                            当我们使用Import的注解之后，含有Import注解的类就是父配置类，而导入的配置类就是子配置类
 
     6. 关于import注解的说明
-        <1> 如果两个配置类都不想使用Configuration注解声明，那么可以把两个配置当作字节码参数传给AnnotationConfigApp
-            licationContext。但是这样两个配置就相当于平等的关系
+        <1> 如果两个配置类都不想使用Configuration注解声明，那么可以把两个配置当作字节码参数传给AnnotationConfigA
+            pplicationContext。但是这样两个配置就相当于平等的关系
 
         <2> 还可以使用import注解，在主配置类中使用import注解添加子配置类。里面可以放多个参数(字节码)
 
 <img src="./img/img12.png" width = 800px>
 
+    7. PropertySource注解
+        <1> 作用：用于指定properties文件的位置
 
+        <2> 属性
+            * value：指定文件的名称和路径   
+                * 关键字：classpath：表示类路径下
+
+    8. 对于使用注解还是使用xml配置文件进行配置的理解
+        <1> 有时候使用全注解的方式进行配置可能还会比较麻烦。所以可以结合xml配置与注解一起使用。最好可以遵循自己写
+            的类通过注解开发，使用到的jar包配置时，可以使用xml配置
+
+    9. Spring整合junit
+        <1> 原因分析
+            1) 应用程序的入口
+                main方法
+
+            2) junit单元测试中，没有main方法也能执行
+                junit集成了一个main方法
+                该方法就会判断当前测试类中哪些方法有 @Test注解
+                junit就让有Test注解的方法执行
+
+            3) junit不会管我们是否采用spring框架
+                在执行测试方法时，junit根本不知道我们是不是使用了spring框架
+                所以也就不会为我们读取配置文件/配置类创建spring核心容器
+
+            4) 由以上三点可知
+                当测试方法执行时，没有Ioc容器，就算写了Autowired注解，也无法实现注入
+
+        <2> Spring整合junit的配置
+            1) 导入spring整合的junit的jar包(坐标)
+
+<img src="./img/img13.png" width = 800px>
+
+            2) 使用Junit提供的一个注解把原有的main方法替换了，替换成spring提供的。需要使用@Runwith注解
+
+<img src="./img/img14.png" width = 800px>
+
+            3) 告知spring的运行器spring和ioc是基于xml配置还是基于注解配置的，并且说明位置。需要使用
+                @ContextConfiguration注解
+                    属性：
+                        location：指定xml文件的位置，需要加上classpath关键字，表示在类路径下
+                        classes：指定注解所在的位置
+
+<img src="./img/img15.png" width = 800px>
+
+            4) 注意：
+                当我们使用spring5.0以上的版本的时候，要求junit的版本需要在4.1.2或者以上
                 
 
-            
-
-
+        
     

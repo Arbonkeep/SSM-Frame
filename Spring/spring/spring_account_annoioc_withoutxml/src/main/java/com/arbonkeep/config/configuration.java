@@ -43,6 +43,7 @@ import java.beans.PropertyVetoException;
 //@Configuration//如果在使用spring框架时，使用注解导入了该类的字节码，就不再需要配置该注解
 @ComponentScan(basePackages = {"com.arbonkeep"})//指定扫描的包
 @Import(JdbcConfiguration.class)
+@PropertySource("classpath:jdbc.properties")//使用注解指定jdbc的配置文件
 public class configuration {
 
 

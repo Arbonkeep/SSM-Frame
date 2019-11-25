@@ -4,8 +4,12 @@ import com.arbonkeep.domain.Account;
 import com.arbonkeep.service.AccountService;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
@@ -13,16 +17,17 @@ import java.util.List;
  * @author arbonkeep
  * @date 2019/11/24 - 16:05
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:bean.xml")
 public class AccountTest {
+    @Autowired
+    private AccountService as = null;
     /**
      * 测试查询所有
      */
     @Test
     public void testFindAll() {
-        //1.获取spring的核心容器对象
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
-        //2.获取bean对象
-        AccountService as = (AccountService) context.getBean("accountService");
+
         //3.执行方法
         List<Account> accounts = as.findAll();
 
@@ -36,10 +41,7 @@ public class AccountTest {
      */
     @Test
     public void testFindById() {
-        //1.获取spring的核心容器对象
-        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
-        //2.获取bean对象
-        AccountService as = (AccountService) context.getBean("accountService", AccountService.class);
+
         //3.执行方法
         Account account = as.findById(4);
 
@@ -55,10 +57,7 @@ public class AccountTest {
         account.setName("july");
         account.setMoney(45465f);
 
-        //1.获取核心容器对象
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
-        //2.获取bean对象
-        AccountService as = context.getBean("accountService", AccountService.class);
+
         //3.执行方法
         as.saveAccount(account);
     }
@@ -72,10 +71,7 @@ public class AccountTest {
         account.setId(3);
         account.setName("ccc");
         account.setMoney(1000f);
-        //1.获取核心容器对象
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
-        //2.获取bean对象
-        AccountService as = context.getBean("accountService", AccountService.class);
+
         //3.执行方法
         as.updateAccount(account);
 
@@ -86,11 +82,7 @@ public class AccountTest {
      */
     @Test
     public void testDelete() {
-        //1.获取核心对象
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
 
-        //2.获取bean对象
-        AccountService as = context.getBean("accountService", AccountService.class);
         //3.执行方法
         as.deleteAccount(4);
     }
