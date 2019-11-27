@@ -4,12 +4,23 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--配置代理的service-->
+    <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountService"></bean>
+
+    <!--配置BeanFactory-->
+    <bean id="beanFactory" class="com.arbonkeep.factory.BeanFactory">
+        <!--注入accountService-->
+        <property name="accountService" ref="accountService"></property>
+
+        <!--注入txManager-->
+        <property name="txManager" ref="txManager"></property>
+    </bean>
+
     <!--配置accountService-->
     <bean id="accountService" class="com.arbonkeep.service.impl.AccountServiceImpl">
         <!--注入dao，通过引用指定-->
         <property name="accountDao" ref="accountDao"></property>
-        <!--注入事务管理器-->
-        <property name="txManager" ref="txManager"></property>
+
     </bean>
 
     <!--配置accountDao-->

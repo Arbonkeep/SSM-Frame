@@ -16,16 +16,9 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService{
     private AccountDao accountDao;
 
-    private TransactionManager txManager;
-
-
     //生成set方法用于spring的数据注入
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
-    }
-
-    public void setTxManager(TransactionManager txManager) {
-        this.txManager = txManager;
     }
 
     @Override
@@ -63,6 +56,7 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public void transfer(String sourceName, String targetName, float money) {
 
+        System.out.println("transfer执行。。。");
         //2.1根据名称查询转出账户]
         Account source = accountDao.findAccountByName(sourceName);
         //2.2根据名称查询转入账户
@@ -73,7 +67,7 @@ public class AccountServiceImpl implements AccountService{
         target.setMoney(target.getMoney() + money);
         //2.5更新转入账户
         accountDao.updateAccount(source);
-        int i = 1 / 0;//当出现异常后，我们运行测试类，会导致数据不匹配的问题。
+        //int i = 1 / 0;//当出现异常后，我们运行测试类，会导致数据不匹配的问题。
                       // 也就是转出账户少钱，但是目标账户没有多钱(我们使用一个事务统一管理)
         //2.6更新转出账户
         accountDao.updateAccount(target);

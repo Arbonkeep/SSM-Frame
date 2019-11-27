@@ -6,6 +6,7 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,12 +22,13 @@ import java.util.List;
 @ContextConfiguration(locations = "classpath:bean.xml")//指定配置文件的位置
 public class AccountTest {
     @Autowired
-    private AccountService as = null;
+    @Qualifier("proxyAccountService")
+    private AccountService as = null;//我们配置了两个AccountService，所以需要指定
 
     @Test
     public void testTransfer() {
         //调用方法，完成转账
-        as.transfer("bbb", "aaa", 100f);
+        as.transfer("aaa", "bbb", 100f);
     }
 
 

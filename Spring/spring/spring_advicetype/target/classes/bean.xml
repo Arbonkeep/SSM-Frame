@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+
+    -->
+
+
+    <!--配置spring的ioc，配置AccountServicve-->
+    <bean id="accountService" class="com.arbonkeep.service.impl.AccountServiceImpl"></bean>
+
+    <!--配置logger类-->
+    <bean id="logger" class="com.arbonkeep.utils.Logger"></bean>
+
+    <!--配置AOP-->
+    <aop:config>
+        <!--配置切面-->
+        <aop:aspect id="logAdvice" ref="logger">
+
+            <!--&lt;!&ndash;配置前置通知,在方法切入点之前执行&ndash;&gt;-->
+            <!--<aop:before method="beforePrintLog" pointcut-ref="pt1"></aop:before>-->
+            <!--&lt;!&ndash;配置后置通知，在方法切入点之后执行，后置通知与异常通知只有一个会执行&ndash;&gt;-->
+            <!--<aop:after-returning method="afterReturningPrintLog" pointcut-ref="pt1"></aop:after-returning>-->
+            <!--&lt;!&ndash;配置异常通知，异常通知与后置通知只有一个会执行，因为出现异常就不会执行后置通知&ndash;&gt;-->
+            <!--<aop:after-throwing method="afterThrowingPrintLog" pointcut-ref="pt1"></aop:after-throwing>-->
+            <!--&lt;!&ndash;配置最终通知，无论切入点方法有没有执行，最终通知都一定会执行&ndash;&gt;-->
+            <!--<aop:after method="afterPrintLog" pointcut-ref="pt1"></aop:after>-->
+            <!--&lt;!&ndash;配置切面标签&ndash;&gt;-->
+            <aop:pointcut id="pt1" expression="execution(* *..*(..))"></aop:pointcut>
+
+            <!--配置环绕通知-->
+            <aop:around method="aroundPrintLog" pointcut-ref="pt1"></aop:around>
+
+        </aop:aspect>
+
+    </aop:config>
+</beans>
