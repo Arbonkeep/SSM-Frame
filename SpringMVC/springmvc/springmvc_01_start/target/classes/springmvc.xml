@@ -23,6 +23,19 @@
 
     </bean>
 
-    <!--开启springmvc注解的支持-->
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <!--配置自定义类型转换器-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!--将自定义的类型转换器加入进来-->
+                <bean class="com.arbonkeep.utils.StringToDateConverter"></bean>
+            </set>
+        </property>
+
+    </bean>
+
+    <!--开启springmvc注解的支持
+        默认会将处理器，适配器，映射器组件生效，但是这里类型转换器并没有支持，所以需要开启该服务
+    -->
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
 </beans>

@@ -1,6 +1,7 @@
 package com.arbonkeep.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author arbonkeep
@@ -9,6 +10,16 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String name;
     private Integer age;
+
+    private Date birthday;
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
     public String getName() {
         return name;
@@ -31,6 +42,7 @@ public class User implements Serializable {
         return "User{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
+                ", birthday=" + birthday +
                 '}';
     }
 }

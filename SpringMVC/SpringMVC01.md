@@ -87,8 +87,131 @@
 
 <img src="./img/img10.png" width = 800px>
 
-    
+    4. javabean封装类中有集合对象，如何完成请求参数的封装？
+        <1> 按照如下方式完成封装即可
 
+<img src="./img/img11.png" width = 800px
 
+        <2> 注意无论怎样封装，对应的属性名一定要与请求参数一致
 
+    5. 自定义类型转换器
+        <1> 描述：即当我们在客户端提交的数据类型是字符串时，会将对应的类型进行转换，比如：我们封装的是Date类型，它会
+            将字符串自动转换为Date类型(前提是字符串日期格式需要是以"/"分割，不能以"-"分割。注意：不同电脑的情况不同
+            我的支持后者不支持前者)
 
+        <2> 那么应该如何解决这一问题呢？可以自定义一个类型转换器
+            1) 自定义一个将字符串转换为日期类型的工具类
+
+            2) 在springmvc.xml中配置自定义类型转换器
+
+<img src="./img/img12.png" width = 800px>
+
+     6. 获取Request以及Response原生对象
+        <1> 只需要在controller类的方法中添加想要获取的参数即可
+        
+## 常用注解
+    1. RequestParam注解(参考springmvc_01_start中anno相关内容)
+        <1> 作用：
+            * 把请求中指定名称的参数给控制器中的形参赋值。
+
+        <2> 属性：
+            * value：请求参数中的名称。
+
+            * name:与value属性作用一样
+
+            * required：请求参数中是否必须提供此参数。默认值：true。表示必须提供，如果不提供将报错。    
+
+<img src="./img/img13.png" width = 800px>
+
+    2. RequestBody注解
+        <1> 作用：
+            * 用于获取请求体内容。直接使用得到是 key=value&key=value...结构的数据。
+            
+            * get 请求方式不适用。get请求没有请求体，包含在请求路径中
+       
+        <2> 属性：
+            * required：是否必须有请求体。默认值是:true。当取值为 true 时,get 请求方式会报错。如果取值为 false，
+                        get 请求得到是 null。
+
+<img src="./img/img14.png" width = 800px>
+
+    3. PathVaribale注解
+        <1> 作用：
+            * 用于绑定 url 中的占位符。例如：请求 url 中 /delete/{id}，这个{id}就是 url 占位符。
+                
+            * url 支持占位符是 spring3.0 之后加入的。是 springmvc 支持 rest 风格 URL 的一个重要标志。
+
+        <2> 属性：
+            * value：用于指定 url 中占位符名称。
+            
+            * required：是否必须提供占位符
+
+<img src="./img/img16.png" width = 800px>
+
+        <3> 补充restful风格
+
+<img src="./img/img15.png" width = 800px>
+
+    4. RequestHeader注解
+        <1> 作用：
+            * 用于获取请求消息头。
+
+        <2> 属性：
+            * value：提供消息头名称
+            
+            * required：是否必须有此消息头
+
+<img src="./img/img17.png" width = 800px>
+
+    5. CookieValue注解
+        <1> 作用：
+            * 用于把指定 cookie 名称的值传入控制器方法参数。
+
+        <2> 属性：
+            * value：指定 cookie 的名称。
+
+            * required：是否必须有此 cookie
+
+<img src="./img/img18.png" width = 800px>
+
+    6. ModelAttribute注解
+        <1> 作用：
+            * 该注解是 SpringMVC4.3 版本以后新加入的。它可以用于修饰方法和参数。
+
+            * 出现在方法上，表示当前方法会在控制器的方法执行之前，先执行。它可以修饰没有返回值的方法，也可以修饰有
+              具体返回值的方法。
+
+            * 出现在参数上，获取指定的数据给参数赋值。
+
+        <2> 属性：
+            * value：用于获取数据的 key。key 可以是 POJO 的属性名称，也可以是 map 结构的 key。
+
+        <3> 应用场景：
+            * 当表单提交数据不是完整的实体类数据时，保证没有提交数据的字段使用数据库对象原来的数据。
+            
+            例如：
+                我们在编辑一个用户时，用户有一个创建信息字段，该字段的值是不允许被修改的。在提交表单数据是肯定没有
+                此字段的内容，一旦更新会把该字段内容置为 null，此时就可以使用此注解解决问题。
+
+        <4> 举例：
+            1) 测试有返回值的类型
+                * 使用user类，我们在客户端请求参数中只使用name和age属性，不会使用birthday属性，当我们在其他方法
+                  使用该注解后，会先执行其他方法，那么在那个方法中可以获取数据的user的birthday属性，然后给其赋值
+                  当我们执行后，即使在那个方法中设置了age和name，也不会覆盖获取到的请求参数，但是，birthday没有
+                  值，所以会被覆盖
+
+<img src="./img/img19.png" width = 800px>
+
+            2) 测试没有的类型(执行依然成功)
+                * 需要使用map，使用该注解修饰user对象，然后从集合中取出对象
+
+<img src="./img/img20.png" width = 800px>
+        
+    7. SessionAttributes注解
+        <1> 作用：
+            * 用于多次执行控制器方法间的参数共享。
+
+        <2> 属性：
+            * value：用于指定存入的属性名称
+
+            * type：用于指定存入的数据类型。

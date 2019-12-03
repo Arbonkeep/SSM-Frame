@@ -1,5 +1,6 @@
 package com.arbonkeep.controller;
 
+import com.arbonkeep.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,4 +30,5 @@ public class HelloController {
         System.out.println("测试requestMapping");
         return "success";
     }
+
 }

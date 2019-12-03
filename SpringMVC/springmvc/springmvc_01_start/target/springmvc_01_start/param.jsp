@@ -26,18 +26,30 @@
 
 
     <%--请求参数绑定，将请求参数封装Account中，类中包含list和map集合--%>
-    <form action="param/testParam2" method="post">
-        姓名：<input type="text" name="username"/> <br/>
-        密码：<input type="text" name="password"/> <br/>
-        金额：<input type="text" name="money"/> <br/>
-        <%--将这组数据封装到user对象中,然后将user对象封装到list集合中--%>
-        用户姓名：<input type="text" name="list[0].name"/> <br/>
-        用户年龄：<input type="text" name="list[0].age"/> <br/>
-        <%--将这组数据封装到user对象中,然后将user对象封装到map集合中--%>
-        用户姓名：<input type="text" name="map['one'].name"/> <br/>
-        用户年龄：<input type="text" name="map['one'].age"/> <br/>
-        <input type="submit" value="提交">
-    </form>
+    <%--<form action="param/testParam2" method="post">--%>
+        <%--姓名：<input type="text" name="username"/> <br/>--%>
+        <%--密码：<input type="text" name="password"/> <br/>--%>
+        <%--金额：<input type="text" name="money"/> <br/>--%>
+        <%--&lt;%&ndash;将这组数据封装到user对象中,然后将user对象封装到list集合中&ndash;%&gt;--%>
+        <%--用户姓名：<input type="text" name="list[0].name"/> <br/>--%>
+        <%--用户年龄：<input type="text" name="list[0].age"/> <br/>--%>
+        <%--&lt;%&ndash;将这组数据封装到user对象中,然后将user对象封装到map集合中&ndash;%&gt;--%>
+        <%--用户姓名：<input type="text" name="map['one'].name"/> <br/>--%>
+        <%--用户年龄：<input type="text" name="map['one'].age"/> <br/>--%>
+        <%--<input type="submit" value="提交">--%>
+    <%--</form>--%>
+
+    <%--自定义类型转换器--%>
+    <%--<form action="param/testUser" method="post">--%>
+        <%--用户姓名：  <input type="text" name="name"> <br/>--%>
+        <%--用户年龄：  <input type="text" name="age"> <br/>--%>
+        <%--用户生日：  <input type="text" name="birthday"> <br/>--%>
+        <%--<input type="submit" value="提交">--%>
+    <%--</form>--%>
+
+    <%--获取Request的原生对象--%>
+    <a href="param/testRequest">获取Request</a>
+
 
 </body>
 </html>
