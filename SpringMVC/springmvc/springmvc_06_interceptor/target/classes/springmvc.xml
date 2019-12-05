@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启注解扫描的包-->
+    <context:component-scan base-package="com.arbonkeep"></context:component-scan>
+
+    <!--配置视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"></property>
+        <!--指定后缀名-->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--配置前端控制器哪些资源不会被拦截-->
+    <mvc:resources mapping="/js/**" location="/js/"></mvc:resources>
+    <mvc:resources mapping="/images/**" location="/images/"></mvc:resources>
+    <mvc:resources mapping="/css/**" location="/css/"></mvc:resources>
+
+
+    <!--配置拦截器:此标签内可以配置多个拦截器-->
+    <mvc:interceptors>
+
+        <!--配置拦截器:第一个-->
+        <mvc:interceptor>
+            <!--要拦截的具体方法-->
+            <mvc:mapping path="/user/*"></mvc:mapping>
+
+            <!--不要拦截的方法-->
+            <!--<mvc:exclude-mapping path=""></mvc:exclude-mapping>-->
+
+            <!--配置拦截器对象。注意拦截器对象必须配置在后面-->
+            <bean class="com.arbonkeep.interceptor.MyInterceptor1"></bean>
+
+        </mvc:interceptor>
+
+        <!--配置第二个拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.arbonkeep.interceptor.MyInterceptor2"></bean>
+        </mvc:interceptor>
+
+
+    </mvc:interceptors>
+
+    <!--开启springmvc对注解的支持-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+</beans>

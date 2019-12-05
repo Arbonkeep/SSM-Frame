@@ -23,7 +23,7 @@
 
         <5> 部署tomcat服务器
 
-        <5> 编写index.jsp和HelloController控制器类
+        <6> 编写index.jsp和HelloController控制器类
 
     3. 入门程序的执行流程详解(参照springmvc_01_start)
 
@@ -209,7 +209,7 @@
         
     7. SessionAttributes注解
         <1> 作用：
-            * 用于多次执行控制器方法间的参数共享。
+            * 用于多次执行控制器方法间的参数共享。只能作用在类上
 
         <2> 属性：
             * value：用于指定存入的属性名称
