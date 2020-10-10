@@ -105,7 +105,7 @@ public class XMLConfigBuilder {
             //返回Configuration
             return cfg;
         }catch(Exception e){
-            throw new RuntimeException(e);
+             throw new RuntimeException(e);
         }finally{
             try {
                 config.close();
