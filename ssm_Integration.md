@@ -158,12 +158,12 @@
         <!--配置mybatis的映射配置文件(注意使用/分割，location)-->
         <property name="mapperLocations" value="classpath:com/arbonkeep/ssm/dao/*.xml"></property>
         <!--配置起别名-->
-        <property name="typeAliases" value="com.arbonkeep.ssm.bean"></property>
+        <property name="typeAliasesPackage" value="com.arbonkeep.ssm.bean"></property>
     </bean>
 
     <!--将通过sqlSession所获取的mapper接口的代理实现类自动扫描，作为spring的组件进行管理-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.arbonkeep.ssm.bean"></property>
+        <property name="basePackage" value="com.arbonkeep.ssm.dao"></property>
     </bean>
 
     <!--配置事务管理器对象-->
